@@ -7,10 +7,10 @@
     <select id="getMonItorHadoop" parameterType="java.util.Hashtable" resultType="java.util.Hashtable">
      SELECT to_char(TIME,'YYYY-MM-DD') AS TIME,CONTENT,UPDATETIME
      FROM(
-     SELECT TIME,CONTENT, UPDATETIME,NUM
+     SELECT TIME,CONTENT, UPDATETIME, ROWNUM NUM
      FROM(
      SELECT T1.TIME AS TIME,T1.CONTENT AS CONTENT,
-     to_char(T1.UPDATETIME,'YYYY-MM-DD HH24:MI:SS') AS UPDATETIME, ROWNUM NUM 
+     to_char(T1.UPDATETIME,'YYYY-MM-DD HH24:MI:SS') AS UPDATETIME
      FROM MONITOR_HADOOP_INFO T1
      WHERE T1.CONTENT LIKE '%${content}%'
      <if test="beginDate!= null and beginDate!= ''">
