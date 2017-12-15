@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- <import resource="quartzADJobBeans.xml"/> -->
+    <!-- enable component scanning -->
+    <context:component-scan base-package="com.viewstar.jsdatamonitor" >
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <context:property-placeholder location="classpath:application.properties" />
+
+    <!-- dataSource -->
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource" >
+		<property name="driver">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="driverUrl">
+			<value>${jdbc.urlnormal}</value>
+		</property>
+ 		<property name="user">
+			<value>${jdbc.usernamenormal}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.passwordnormal}</value>
+		</property>
+		<property name="alias">
+			<value>${jdbc.usernamenormal}</value>
+		</property>
+
+		<property name="prototypeCount">
+			<value>50</value>
+		</property>
+		<property name="maximumConnectionCount">
+			<value>50</value>
+		</property>
+		<property name="minimumConnectionCount">
+			<value>100</value>
+		</property>
+		<property name="simultaneousBuildThrottle">
+			<value>50</value>
+		</property>
+		<property name="maximumActiveTime">
+			<value>60000000</value>
+		</property>
+		<property name="trace">
+			<value>false</value>
+		</property>
+		<property name="verbose">
+			<value>true</value>
+		</property>
+
+	</bean>
+
+    <!-- transactionManager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+       <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- define the SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage"
+            value="com.viewstar.jsdatamonitor.model" />
+    </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage"
+            value="com.viewstar.jsdatamonitor.persistence" />
+    </bean>
+
+    <!-- enable autowire -->
+    <context:annotation-config />
+
+    <!-- enable transaction demarcation with annotations -->
+    <tx:annotation-driven />
+
+    <!-- enable aspectj -->
+    <aop:aspectj-autoproxy />
+
+    <!-- message source -->
+<!--     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> -->
+<!--         <property name="basenames"> -->
+<!--             <list> -->
+<!--                 <value>exceptions</value> -->
+<!--                 <value>ValidationMessages</value> -->
+<!--                 <value>message</value> -->
+<!--             </list> -->
+<!--         </property> -->
+<!--     </bean> -->
+	 <import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
+	<bean id="webAnnotations"
+		class="org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations" />
+	<bean id="jsr181HandlerMapping" class="org.codehaus.xfire.spring.remoting.Jsr181HandlerMapping">
+		<property name="xfire" ref="xfire" />
+		<property name="webAnnotations" ref="webAnnotations" />
+	</bean>
+</beans>

@@ -1,0 +1,47 @@
+/* CSS reset */
+/* CSS Document */
+.csdn_comments p{ list-style-type: none; margin:0; padding:0 }
+.csdn_comments .clearfix {_zoom: 1;}
+.csdn_comments .clearfix:after {content: ".";display: block;visibility: hidden;clear: both;height: 0px;}
+
+
+/*csdn_comments*/
+.csdn_comments{ font-size:14px;width:49%;color: #333;font: normal 12px/24px Helvetica, Tahoma, Arial, sans-serif; font-size:14px;margin:20 auto;margin-left:27%;}
+.csdn_comments h2 { font-size:18px;}
+
+.csdn_comments .comments_reply .reply{ padding:0px 0 0px 0; border-bottom:1px solid #ccc;}
+
+
+.csdn_comments .user_img{padding:2px;}
+.csdn_comments .user_img img{width:34px; height:34px;}
+.csdn_comments .user_name{ color:#333; text-align:left;margin-left:-50px}
+.csdn_comments .reply{ margin-bottom:10px;}
+.csdn_comments .reply dt{ float:left; margin-right:10px;}
+.csdn_comments .reply_box{ width:100%; border:1px solid #CCC; font-size:14px;}
+
+.csdn_comments .reply_submit{ font-size:12px; vertical-align:middle;display:block; *display:inline-block; margin:10px 0; height:33px; line-height:33px;}
+.csdn_comments .reply_submit input{ vertical-align:middle;}
+
+.csdn_comments .reply_btn{ font-size:14px; background:#4e6c97; padding:8px 15px; border:none; color:#fff; cursor: pointer; font:"Microsoft YaHei"; font-weight:bold;}
+.csdn_comments .reply_content{ white-space: pre-wrap;word-wrap: break-word;padding: 10 0 0 10;}
+
+.csdn_comments .note_grey{ color:#999; font-size:12px;}
+.csdn_comments textarea{ padding:1%;}
+
+/*page*/
+.page_nav{clear:both; padding:15px 0; color:#666; font:normal 12px/24px Arial; text-align:center;}
+.page_nav a{display:inline-block; height:22px; margin:0 2px; padding:0 8px; text-decoration:none; border:solid 1px #dbe5ee; -moz-border-radius:2px; -webkit-border-radius:2px; -khtml-border-radius:2px; border-radius:2px; background:#fff; color:#333; font:normal 12px/22px Arial, Helvetica, sans-serif; cursor:pointer;}
+.page_nav strong{display:inline-block; height:24px; margin:0 3px; padding:0 8px; border:none; -moz-border-radius:2px; -webkit-border-radius:2px; -khtml-border-radius:2px; border-radius:2px; background:#C00; color:#fff; font-weight:normal; line-height:24px; text-decoration:none;}
+.page_nav a:hover,
+.page_nav a.on{height:24px; margin:0 3px; border:none; background:#C00; color:#fff; line-height:24px; text-decoration:none;}
+.page_nav a.select{cursor:default;}
+.page_nav .view_all{display:block; text-align:center;}
+.page_nav .view_all a{height:auto; margin:0; padding:0; border:none; color:#06c; line-height:24px;}
+.page_nav .view_all a:hover{height:auto; margin:0; padding:0; background:none;}
+
+.viewStarTableContainer {
+	border: 0px;;
+	padding: 0px;
+	margin: 0px;
+	bottom: 0px;
+}

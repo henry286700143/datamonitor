@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+    <display-name>JSDataMonitor</display-name>
+
+    <!-- context -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/spring/applicationContext.xml</param-value>
+    </context-param>
+
+    <!-- listener -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+    </listener>
+
+    <!-- servlet -->
+    <servlet>
+        <servlet-name>SpringMVCServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/appServlet/servlet-context.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- servlet-mapping -->
+    <servlet-mapping>
+        <servlet-name>SpringMVCServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.viewstar.jsdatamonitor.util.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+     <!-- <filter>
+         <filter-name>sesfilter</filter-name>
+         <filter-class>com.viewstar.jsdatamonitor.util.filter.SessionFilter</filter-class>
+     </filter>
+     <filter-mapping>
+         <filter-name>sesfilter</filter-name>
+         <url-pattern>*</url-pattern>
+     </filter-mapping>
+
+   <filter>
+        <filter-name>UserLogFilter</filter-name>
+        <filter-class>com.viewstar.jsdatamonitor.util.filter.UserLogFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserLogFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping> -->
+</web-app>

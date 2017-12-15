@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+
+/*--------------------------------------------------------------------------------
+
+								图标定义
+
+---------------------------------------------------------------------------------*/
+
+
+.tvlogo {
+	width: 40px;
+	height:40px;
+	background: url("../image/tvlogo.png") no-repeat;
+	background-size:cover;
+	display:block;
+	float:left;
+	margin-right:5px;
+	background-position: center center;
+}
+
+/* 标签关闭按钮 */
+.closebtn {
+	background-image: url(../image/nav/btn-close.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	margin-top:8px;
+	margin-right:4px;
+	width: 13px;
+	height: 13px;
+}
+
+.closebtn:hover{
+	background-image: url(../image/nav/btn-close-over.png);
+}
+
+

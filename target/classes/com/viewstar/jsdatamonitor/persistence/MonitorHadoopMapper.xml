@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.viewstar.jsdatamonitor.persistence.MonitorHadoopMapper">
+	
+    <!-- 查询接口名称-->
+    <select id="getMonItorHadoop" parameterType="java.util.Hashtable" resultType="java.util.Hashtable">
+     SELECT to_char(TIME,'YYYY-MM-DD') AS TIME,CONTENT,UPDATETIME
+     FROM(
+     SELECT TIME,CONTENT, UPDATETIME,NUM
+     FROM(
+     SELECT T1.TIME AS TIME,T1.CONTENT AS CONTENT,
+     to_char(T1.UPDATETIME,'YYYY-MM-DD HH24:MI:SS') AS UPDATETIME, ROWNUM NUM 
+     FROM MONITOR_HADOOP_INFO T1
+     WHERE T1.CONTENT LIKE '%${content}%'
+     <if test="beginDate!= null and beginDate!= ''">
+     AND T1.TIME<![CDATA[>=]]>TO_DATE('${beginDate}','YYYY-MM-DD')
+     </if>
+     <if test="endDate!= null and endDate!= ''">
+     AND T1.TIME<![CDATA[<=]]>TO_DATE('${endDate}','YYYY-MM-DD')
+     </if>
+     ORDER BY UPDATETIME DESC
+     )
+     WHERE ROWNUM<![CDATA[<=]]> ${endRow})
+     WHERE NUM <![CDATA[>=]]> ${beginRow}
+    </select>
+	<!-- 查询接口名称记录数 -->
+	<select id="getMonItorHadoopCount" parameterType="java.util.Hashtable" resultType="Integer">
+		SELECT COUNT(*) 
+       FROM (SELECT T1.TIME,T1.CONTENT,T1.UPDATETIME 
+     FROM MONITOR_HADOOP_INFO T1
+     WHERE T1.CONTENT LIKE '%${content}%'
+     <if test="beginDate!= null and beginDate!= ''">
+     AND T1.TIME<![CDATA[>=]]>TO_DATE('${beginDate}','YYYY-MM-DD')
+     </if>
+     <if test="endDate!= null and endDate!= ''">
+     AND T1.TIME<![CDATA[<=]]>TO_DATE('${endDate}','YYYY-MM-DD')
+     </if>
+     )
+	</select>
+	<insert id="insertHadoopInfo" parameterType="java.util.Hashtable">
+		INSERT INTO MONITOR_HADOOP_INFO
+		(
+			TIME,
+			CONTENT,
+			UPDATETIME
+		)
+		VALUES
+		(
+			TO_DATE('${time}','YYYY-MM-DD'),
+			'${content}',
+			SYSDATE
+		)
+	</insert>
+</mapper>

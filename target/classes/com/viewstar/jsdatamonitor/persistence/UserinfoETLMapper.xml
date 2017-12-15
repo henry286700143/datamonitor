@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.viewstar.jsdatamonitor.persistence.UserinfoETLMapper">
+
+	<insert id="insertUserinfoEPGLast" parameterType="java.util.Hashtable" >
+		INSERT INTO USERINFO_EPG_LAST
+		  SELECT USERID, LOGINTIME, TYPE, STBMODEL, UPDATETIME
+		    FROM (SELECT USERID,
+		                 LOGINTIME,
+		                 TYPE,
+		                 STBMODEL,
+		                 UPDATETIME,
+		                 ROW_NUMBER() OVER(PARTITION BY USERID ORDER BY LOGINTIME DESC) AS ROWNUMBER
+		            FROM USERINFO_EPG_LAST_TEMP)
+		   WHERE ROWNUMBER = 1
+	</insert>
+	
+	<insert id="insertUserinfoActiveLast" parameterType="java.util.Hashtable" >
+		INSERT INTO USERINFO_ACTIVE_LAST
+		  SELECT USERID, LOGINTIME, TYPE, UPDATETIME
+		    FROM (SELECT USERID,
+		                 LOGINTIME,
+		                 TYPE,
+		                 UPDATETIME,
+		                 ROW_NUMBER() OVER(PARTITION BY USERID ORDER BY LOGINTIME DESC) AS ROWNUMBER
+		            FROM USERINFO_ACTIVE_LAST_TEMP)
+		   WHERE ROWNUMBER = 1
+	</insert>
+	
+	<insert id="insertUserinfoEPGLastTemp" parameterType="java.util.Hashtable" >
+		INSERT INTO USERINFO_EPG_LAST_TEMP
+			SELECT * FROM USERINFO_EPG_LAST
+	</insert>
+	
+	<insert id="insertUserinfoActiveLastTemp" parameterType="java.util.Hashtable" >
+		INSERT INTO USERINFO_ACTIVE_LAST_TEMP
+			SELECT * FROM USERINFO_ACTIVE_LAST
+	</insert>
+	
+	<delete id="deleteUserinfoEPGLast" parameterType="java.util.Hashtable">
+		DELETE FROM USERINFO_EPG_LAST
+	</delete>
+	
+	<delete id="deleteUserinfoActiveLast" parameterType="java.util.Hashtable">
+		DELETE FROM USERINFO_ACTIVE_LAST
+	</delete>
+	
+	<select id="getUserinfoActiveLastCount" parameterType="java.util.Hashtable" resultType="java.util.HashMap">
+		SELECT COUNT(*) FROM USERINFO_ACTIVE_LAST
+	</select>
+	
+	<select id="getUserinfoEPGLastCount" parameterType="java.util.Hashtable" resultType="java.util.HashMap">
+		SELECT COUNT(*) FROM USERINFO_EPG_LAST
+	</select>
+	
+	<insert id="insertUserinfoEPGFirstTemp" parameterType="java.util.Hashtable" >
+		INSERT INTO USERINFO_EPG_FIRST_TEMP
+			SELECT * FROM USERINFO_EPG_FIRST
+	</insert>
+	
+	<delete id="deleteUserinfoEPGFirst" parameterType="java.util.Hashtable">
+		DELETE FROM USERINFO_EPG_FIRST
+	</delete>
+	
+	<insert id="insertUserinfoEPGFirst" parameterType="java.util.Hashtable" >
+		INSERT INTO USERINFO_EPG_FIRST
+		  SELECT USERID, LOGINTIME, TYPE, STBMODEL, UPDATETIME
+		    FROM (SELECT USERID,
+		                 LOGINTIME,
+		                 TYPE,
+		                 STBMODEL,
+		                 UPDATETIME,
+		                 ROW_NUMBER() OVER(PARTITION BY USERID ORDER BY LOGINTIME) AS ROWNUMBER
+		            FROM USERINFO_EPG_FIRST_TEMP)
+		   WHERE ROWNUMBER = 1
+	</insert>
+
+</mapper>
