@@ -19,4 +19,13 @@ public class PageController {
 	public ModelAndView getNavPage(){
 		return new ModelAndView("nav");
 	}
+	
+	/**
+	 * 进入首页
+	 * @return 首页
+	 */
+	@RequestMapping(value = "getIndex")
+	public ModelAndView getIndex(){
+		return new ModelAndView("reportexport/getIndex");
+	}
 }

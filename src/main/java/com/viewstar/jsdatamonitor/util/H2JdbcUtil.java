@@ -2,6 +2,8 @@ package com.viewstar.jsdatamonitor.util;
 
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.h2.jdbcx.JdbcConnectionPool;
@@ -32,5 +34,25 @@ public class H2JdbcUtil {
 
     public static JdbcConnectionPool getCp() {
         return cp;
+    }
+    
+    public static int executeUpdate(String sql){
+    	Connection conn = null;
+    	Statement stmt = null;
+    	int flag = 0;
+		try {
+			conn = cp.getConnection();
+			stmt = conn.createStatement();
+	    	flag = stmt.executeUpdate(sql);
+	    	
+	    	//释放资源
+	        stmt.close();
+	        //关闭连接
+	        conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+    	return flag;
     }
 }

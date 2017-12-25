@@ -93,7 +93,7 @@
                 var li = "<li subid='"+id+"'><a href='#"+id+"'>"
                     + label
                     + "</a> <span class='closebtn' style='float: left;' role='presentation'></span></li>";
-                var tabContentHtml = '<iframe class="mainframe"  src="' + url + '" ></iframe>';
+                var tabContentHtml = '<iframe class="mainframe"  src="' + url + '"></iframe>';
                 tabs.find(".ui-tabs-nav").append(li);
                 tabs.append( "<div id='" + id + "' class='subTab'>" + tabContentHtml + "</div>" );
                 tabs.tabs("refresh");
@@ -155,16 +155,22 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2 col-md-1 sidebar">
+            <div class="col-sm-2 col-md-2 sidebar" style="width: 13%;">
                 <ul class="nav nav-sidebar" style="margin-top:60px;">
-                    <li><a href="#" onclick="addTab('HADOOP','getMonItorHadoop')" >HADOOP</a></li>
-                    <li><a href="#" onclick="addTab('数据库','getMonItor')" >数据库</a></li>
-                    <li><a href="#" class="load" onclick="addTab('文件','getMonItorFile')" >文件</a></li>
-                	<li><a href="#" onclick="addTab('运行', 'getMonItorRun')">运行</a></li>
+                	<li><a href="#" class="load" onclick="addTab('首页','getIndex')" >首页</a></li>
+                	<li><a href="#" onclick="addTab('新建混凝土校验单','addCheckRecord')" >新建混凝土校验单</a></li>
+                    <li><a href="#" onclick="addTab('新建混凝土出料单','addMaterialRecord')" >新建混凝土出料单</a></li>
+                    <li><a href="#" onclick="addTab('查询混凝土校验单','getCheckRecord')" >查询混凝土校验单</a></li>
+                    <li><a href="#" onclick="addTab('查询混凝土出料单','getMaterialRecord')" >查询混凝土出料单</a></li>
+                    <li><a href="#" onclick="addTab('工地信息维护','getSiteList')" >工地信息维护</a></li>
+                    <li><a href="#" onclick="addTab('司机信息维护', 'getDriverList')">司机信息维护</a></li>
+                	<li><a href="#" onclick="addTab('车辆信息维护', 'getCarList')">车辆信息维护</a></li>
+                	<li><a href="#" onclick="addTab('配合比信息维护', 'getRatioList')">配合比信息维护</a></li>
+                	<li><a href="#" onclick="addTab('统计信息', 'getStatResult')">统计信息</a></li>
                 </ul>
 
             </div>
-            <div class="col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1 main" style="padding: 0;">
+            <div style="float:left;margin-left: 2%;width: 85%;padding: 4%;min-height: 1px;">
                 <div id="tabs" style="height: 100%;">
                     <ul>
                     </ul>

@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,12 +21,67 @@ import org.springframework.web.servlet.ModelAndView;
 import com.viewstar.jsdatamonitor.constants.Constants;
 import com.viewstar.jsdatamonitor.util.DateUtil;
 import com.viewstar.jsdatamonitor.util.FileUtil;
+import com.viewstar.jsdatamonitor.util.H2JdbcUtil;
 
 @Controller
 public class ReportViewController {
 	DateUtil du = new DateUtil();
 	
 	FileUtil fu = new FileUtil();
+	
+	H2JdbcUtil h2u = new H2JdbcUtil();
+	
+	@RequestMapping(value = "addCheckRecord")
+	public ModelAndView addCheckRecord(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return new ModelAndView("reportexport/addCheckRecord");
+	}
+	@RequestMapping(value = "addCheckRecordResult")
+	public ModelAndView getCheckRecordResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String contractId = request.getParameter("contractId");
+		String taskId = request.getParameter("taskId");
+		String supplyUnit = request.getParameter("supplyUnit");
+		String date = request.getParameter("date");
+		String projectName = request.getParameter("projectName");
+		String projectPosition = request.getParameter("projectPosition");
+		String requester = request.getParameter("requester");
+		String strength = request.getParameter("strength");
+		String impervious = request.getParameter("impervious"); 
+		String transportModel = request.getParameter("transportModel");
+		String others = request.getParameter("others");
+		String supplyNum = request.getParameter("supplyNum");
+		String slump = request.getParameter("slump");
+		String slumpReal = request.getParameter("slumpReal");
+		String ratioId = request.getParameter("ratioId");
+		String ratioContent = request.getParameter("ratioContent");
+		String distance = request.getParameter("distance");
+		String carNum = request.getParameter("carNum");
+		String driver = request.getParameter("driver");
+		String outboundTime = request.getParameter("outboundTime");
+		String turnUpTime = request.getParameter("turnUpTime");
+		String temperature = request.getParameter("temperature");
+		String beginPourTime = request.getParameter("beginPourTime");
+		String endPourTime = request.getParameter("endPourTime");
+		String slumpSite = request.getParameter("slumpSite");
+		String name1 = request.getParameter("name1");
+		String name2 = request.getParameter("name2");
+		
+		String sql = "INSERT INTO CHECKRECORD VALUES('" + contractId+ "','" + taskId+ "','" + supplyUnit+ "',"
+				+ "'" + date+ "','" + projectName+ "','" + projectPosition+ "','" + requester+ "','" + strength+ "',"
+				+ "'" + impervious+ "','" + transportModel+ "','" + others+ "','" + supplyNum+ "','" + slump+ "',"
+				+ "'" + slumpReal+ "','" + ratioId+ "','" + ratioContent+ "','" + distance+ "','" + carNum+ "',"
+				+ "'" + driver+ "','" + outboundTime+ "','" + turnUpTime+ "','" + temperature+ "','" + beginPourTime+ "',"
+				+ "'" + endPourTime+ "','" + slumpSite+ "','" + name1+ "','" + name2+ "',CURRENT_TIMESTAMP)";
+		int flag = h2u.executeUpdate(sql);
+		
+		if(flag != 0){
+			request.setAttribute("result", "success");
+		}else{
+			request.setAttribute("result", "failure");
+		}
+		
+		return new ModelAndView("ajaxresult");
+	}
+	
 	/**
 	 * 实现各种单据在浏览器中展示，提交，保存的逻辑
 	 */
